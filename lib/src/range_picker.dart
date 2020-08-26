@@ -39,8 +39,8 @@ class RangePicker extends StatelessWidget {
         assert(onChanged != null),
         assert(!firstDate.isAfter(lastDate)),
         assert(!lastDate.isBefore(firstDate)),
-        assert(!selectedPeriod.start.isBefore(firstDate.add(Duration(minutes: 1)))),
-        assert(!selectedPeriod.end.isAfter(lastDate.subtract(Duration(minutes: 1)))),
+        assert(selectedPeriod.start.isBefore(firstDate.add(Duration(days: 1)))),
+        assert(selectedPeriod.end.isAfter(lastDate.subtract(Duration(days: 1)))),
         super(key: key);
 
   /// The currently selected period.
