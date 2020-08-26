@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_date_pickers/flutter_date_pickers.dart';
 import 'package:flutter_date_pickers/src/date_period.dart';
-import 'package:flutter_date_pickers/src/i_selectable_picker.dart';
-import 'package:flutter_date_pickers/src/layout_settings.dart';
 import 'package:flutter_date_pickers/src/date_picker_keys.dart';
 import 'package:flutter_date_pickers/src/day_based_changable_picker.dart';
+import 'package:flutter_date_pickers/src/i_selectable_picker.dart';
+import 'package:flutter_date_pickers/src/layout_settings.dart';
 import 'package:flutter_date_pickers/src/typedefs.dart';
 
 // Styles for current displayed period: Theme.of(context).textTheme.subhead
@@ -37,8 +37,8 @@ class RangePicker extends StatelessWidget {
       this.onMonthChanged})
       : assert(selectedPeriod != null),
         assert(onChanged != null),
-        assert(!firstDate.isAfter(lastDate)),
-        assert(!lastDate.isBefore(firstDate)),
+        assert(!firstDate.add(Duration(minutes: 1)).isAfter(lastDate)),
+        assert(!lastDate.subtract(Duration(minutes: 1)).isBefore(firstDate)),
         assert(!selectedPeriod.start.isBefore(firstDate)),
         assert(!selectedPeriod.end.isAfter(lastDate)),
         super(key: key);
@@ -85,9 +85,8 @@ class RangePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ISelectablePicker<DatePeriod> rangeSelectablePicker = RangeSelectable(
-        selectedPeriod, firstDate, lastDate,
-        selectableDayPredicate: selectableDayPredicate);
+    ISelectablePicker<DatePeriod> rangeSelectablePicker =
+        RangeSelectable(selectedPeriod, firstDate, lastDate, selectableDayPredicate: selectableDayPredicate);
 
     return DayBasedChangeablePicker<DatePeriod>(
       selectablePicker: rangeSelectablePicker,
